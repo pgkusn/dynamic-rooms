@@ -118,13 +118,8 @@ export default {
             discount: 0.9,
             charge: 200
         });
-
-        const rooms = ref([]);
-        rooms.value = cloneDeep(roomsData);
-
-        const selectRoom = ref({});
-        selectRoom.value = cloneDeep(rooms.value[0]);
-
+        const rooms = ref(roomsData);
+        const selectRoom = ref(cloneDeep(rooms.value[0]));
         const addRoom = () => {
             rooms.value.push({
                 id: Date.now(),
@@ -142,7 +137,6 @@ export default {
             });
             selectRoom.value = rooms.value[rooms.value.length - 1];
         };
-
         const deleteRoom = id => {
             const index = rooms.value.findIndex(room => room.id === id);
             rooms.value.splice(index, 1);
