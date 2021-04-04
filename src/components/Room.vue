@@ -1,7 +1,7 @@
 <template>
     <div class="room_container">
         <div class="cover" :style="{ 'background-image': `url('${$props.room.cover}')` }">
-            <i class="fas fa-times delete_btn" @click="$emit('deleteRoom', $props.room.id);"></i>
+            <i class="fas fa-times delete_btn" @click="$emit('deleteRoom');"></i>
             <h3>{{ $props.room.name }}</h3>
             <div class="icon">
                 <i class="fas fa-coffee" v-if="$props.room.equipment.breakfast"></i>

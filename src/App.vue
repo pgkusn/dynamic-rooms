@@ -16,10 +16,10 @@
                 <div class="room_edit btn btn-outline-primary" @click="addRoom">+ 新增房間</div>
                 <hr/>
                 <div class="room_edit">
-                    <template v-for="room in rooms" :key="room.id">
+                    <template v-for="(room, index) in rooms" :key="room.id">
                         <div class="room_tag" v-if="room.id === selectRoom.id">
                             <label for="toggle_check">
-                                <h4>{{ selectRoom.name }}<i class="fas fa-trash-alt delete_btn" @click.prevent="deleteRoom(selectRoom.id)"></i></h4>
+                                <h4>{{ selectRoom.name }}<i class="fas fa-trash-alt delete_btn" @click.prevent="deleteRoom(index)"></i></h4>
                             </label>
                             <input id="toggle_check" class="toggle_check" type="checkbox"/>
                             <div class="edit_part">
@@ -93,8 +93,8 @@
                 <h1>房間列表</h1>
                 <hr/>
                 <div class="row">
-                    <div class="col_room col-lg-4 col-md-6" v-for="room in rooms" :key="room.id">
-                        <Room :room="room" :common="common" @deleteRoom="deleteRoom"></Room>
+                    <div class="col_room col-lg-4 col-md-6" v-for="(room, index) in rooms" :key="room.id">
+                        <Room :room="room" :common="common" @deleteRoom="deleteRoom(index)"></Room>
                     </div>
                 </div>
             </div>
@@ -122,7 +122,7 @@ export default {
         const selectRoom = ref(cloneDeep(rooms.value[0]));
         const addRoom = () => {
             rooms.value.push({
-                id: Date.now(),
+                id: rooms.value.length + 1,
                 name: '新房間',
                 eng: 'New Room',
                 price: 0,
@@ -137,8 +137,7 @@ export default {
             });
             selectRoom.value = rooms.value[rooms.value.length - 1];
         };
-        const deleteRoom = id => {
-            const index = rooms.value.findIndex(room => room.id === id);
+        const deleteRoom = index => {
             rooms.value.splice(index, 1);
             selectRoom.value = rooms.value[0];
         };
